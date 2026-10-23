@@ -1046,8 +1046,7 @@ footer {
       <input id="searchInput" type="search" placeholder="Search sessions, speakers or topics…" aria-label="Search sessions">
     </label>
     <div class="toolbar-actions">
-      <button class="chipbtn active" id="allFilter">All sessions</button>
-      <button class="chipbtn" id="techFilter">Tech talks</button>
+      <button class="chipbtn active" id="allFilter">Tech talks</button>
       <button class="chipbtn" id="savedFilter">My schedule (<span id="savedCount">0</span>)</button>
     </div>
   </section>
@@ -1492,8 +1491,9 @@ function renderMini() {
 }
 
 function updateFilters() {
-  ["allFilter", "techFilter", "savedFilter"].forEach((id, i) => {
-    $(id).classList.toggle("active", ["all", "tech", "saved"][i] === filter);
+  ["allFilter", "savedFilter"].forEach((id, i) => {
+    const el = $(id);
+    if (el) el.classList.toggle("active", ["all", "saved"][i] === filter);
   });
   $("savedCount").textContent = saved.size;
   $("dayStrip").querySelectorAll("[data-day]").forEach(b => {
@@ -1762,11 +1762,13 @@ $("allFilter").addEventListener("click", () => {
   updateFilters();
 });
 
-$("techFilter").addEventListener("click", () => {
-  filter = filter === "tech" ? "all" : "tech";
-  renderSessions();
-  updateFilters();
-});
+if ($("techFilter")) {
+  $("techFilter").addEventListener("click", () => {
+    filter = filter === "tech" ? "all" : "tech";
+    renderSessions();
+    updateFilters();
+  });
+}
 
 $("savedFilter").addEventListener("click", () => {
   if (saved.size > 0) {
