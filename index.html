@@ -287,56 +287,215 @@ button { cursor: pointer; border: 0; background: transparent; }
   white-space: nowrap;
 }
 
-/* Session Cards */
+/* Session Cards & Concurrent Slot Layout */
 .session-list {
   display: grid;
-  gap: 9px;
+  gap: 12px;
 }
 
-.session-card {
-  display: grid;
-  grid-template-columns: 88px minmax(0, 1fr) 20px;
+/* Concurrent / Parallel Slot Container */
+.concurrent-slot {
+  background: linear-gradient(180deg, #fffcf6 0%, #ffffff 100%);
+  border: 1.5px solid #fed7aa;
+  border-radius: var(--radius-md);
+  padding: 12px 14px 14px;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.09);
+  position: relative;
+  overflow: hidden;
+}
+
+.concurrent-slot::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #f59e0b 0%, #c8102e 100%);
+  border-radius: 4px 0 0 4px;
+}
+
+.concurrent-header {
+  display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 10px;
+  margin-bottom: 11px;
+  border-bottom: 1px dashed #fed7aa;
+}
+
+.concurrent-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+}
+
+.concurrent-time-badge svg {
+  width: 16px;
+  height: 16px;
+  color: #d97706;
+}
+
+.concurrent-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid #fde68a;
+  letter-spacing: 0.2px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ea580c;
+  box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+}
+
+.concurrent-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 680px) {
+  .concurrent-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* Base Session Card */
+.session-card {
   text-align: left;
-  padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: #ffffff;
   color: inherit;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
   width: 100%;
+  cursor: pointer;
 }
 
 .session-card:hover {
   border-color: #cbd5e1;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+/* Single Session Card Layout */
+.session-card.single-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.card-time-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .session-time {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-secondary);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ink);
   white-space: nowrap;
+  letter-spacing: -0.2px;
+}
+
+.session-duration {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .session-info {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.track-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.2px;
+}
+
+.tag-showcase {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+.tag-partner {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+}
+
+.saved-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 100px;
 }
 
 .session-title {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--ink);
   line-height: 1.35;
-  margin-bottom: 4px;
+  letter-spacing: -0.2px;
 }
 
 .session-speakers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   color: var(--muted);
   line-height: 1.4;
@@ -345,15 +504,22 @@ button { cursor: pointer; border: 0; background: transparent; }
   text-overflow: ellipsis;
 }
 
-.session-extra {
-  display: inline-block;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--red);
-  background: var(--red-light);
-  border-radius: 100px;
-  padding: 2px 7px;
-  margin-top: 5px;
+.session-speakers svg {
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.session-speakers span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-end-col {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .chevron-svg {
@@ -363,12 +529,72 @@ button { cursor: pointer; border: 0; background: transparent; }
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Selected Session Card (Red Border & Accent Stripe) */
+/* Concurrent Card (Boxed Style inside Parallel Slot) */
+.session-card.concurrent-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 15px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.session-card.concurrent-card:hover {
+  border-color: #cbd5e1;
+}
+
+.card-meta-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.location-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.location-chip svg {
+  width: 13px;
+  height: 13px;
+  color: #94a3b8;
+}
+
+.card-action-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+}
+
+.card-action-hint svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* Selected State */
 .session-card.selected {
   border-color: #f43f5e;
   border-left: 4px solid var(--red);
   background: linear-gradient(90deg, #fff5f6 0%, #ffffff 100%);
-  box-shadow: 0 4px 14px rgba(200, 16, 46, 0.08);
+  box-shadow: 0 4px 16px rgba(200, 16, 46, 0.1);
+}
+
+.session-card.concurrent-card.selected {
+  border-color: #f43f5e;
+  border-left: 4px solid var(--red);
+  background: linear-gradient(135deg, #fff5f6 0%, #ffffff 100%);
+  box-shadow: 0 6px 18px rgba(200, 16, 46, 0.12);
 }
 
 .session-card.selected .session-time {
@@ -923,6 +1149,25 @@ footer {
   .sessions-column { width: 100%; }
   .detail-column { display: none !important; }
 
+  /* Mobile session card and concurrent slot tuning */
+  .session-card.single-card {
+    grid-template-columns: 78px minmax(0, 1fr) 18px;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .session-time {
+    font-size: 12.5px;
+  }
+  .session-title {
+    font-size: 14px;
+  }
+  .concurrent-slot {
+    padding: 11px 12px 13px;
+  }
+  .concurrent-card {
+    padding: 12px 12px;
+  }
+
   /* Mobile Floating Card Modal */
   .modal-backdrop {
     align-items: flex-end;
@@ -1157,36 +1402,339 @@ const days = [
 ];
 
 const sessions = [
-  { id: 1, day: 0, time: "11:00 AM", end: "12:00 PM", title: "Trust Reviews Reimagined with AI", speakers: ["Latha Vasudevarao", "Monika Oberoi"], description: "Discover how AI is transforming trust reviews with faster insights, greater accuracy and improved customer outcomes. Learn real-world use cases, key innovations and what’s next in building trust at scale." },
-  { id: 2, day: 0, time: "12:00 PM", end: "1:00 PM", title: "Prompt, Build, Scale Data Engineering", speakers: ["Satish Ponda", "Saurabh Dey"], description: "Explore how prompt-driven development and modern engineering practices can help data teams build, scale and deliver trusted data solutions faster." },
-  { id: 3, day: 0, time: "2:00 PM", end: "3:00 PM", title: "Every Call, Intelligently Orchestrated", speakers: ["Shivaprasad Mohanrao"], description: "See how intelligent orchestration can transform call journeys, coordinate experiences and help teams respond more effectively." },
-  { id: 4, day: 0, time: "3:00 PM", end: "4:00 PM", title: "Policy Answers in Seconds", speakers: ["Kunal Kumar", "Prachiti Bake", "Shivang Bhargava"], description: "Discover a faster way to find policy answers, reduce manual searching and help colleagues reach consistent, actionable guidance." },
-  { id: 5, day: 0, time: "7:00 PM", end: "8:00 PM", title: "Tech Talk by ThoughtSpot", speakers: ["Sonny Rivera", "Shailesh Prajapati"], tech: true, description: "An industry technology talk from ThoughtSpot. Explore ideas, perspectives and practical approaches shared by the guest speakers." },
+  // MONDAY, OCT 26 (Day 0)
+  {
+    id: 1,
+    day: 0,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "Trust Reviews Reimagined with AI",
+    speakers: ["Latha Vasudevarao", "Monika Oberoi"],
+    track: "Showcase",
+    description: "Discover how AI is transforming trust reviews with faster insights, greater accuracy and improved customer outcomes. Learn real-world use cases, key innovations and what’s next in building trust at scale."
+  },
+  {
+    id: 2,
+    day: 0,
+    time: "12:00 PM",
+    end: "12:45 PM",
+    title: "Prompt, Build, Scale Data Engineering",
+    speakers: ["Satish Ponda", "Saurabh Dey"],
+    track: "Showcase",
+    description: "Explore how prompt-driven development and modern engineering practices can help data teams build, scale and deliver trusted data solutions faster."
+  },
+  {
+    id: 3,
+    day: 0,
+    time: "2:00 PM",
+    end: "2:45 PM",
+    title: "Every Call, Intelligently Orchestrated",
+    speakers: ["Shivaprasad Mohanrao"],
+    track: "Showcase",
+    description: "See how intelligent orchestration can transform call journeys, coordinate experiences and help teams respond more effectively."
+  },
+  {
+    id: 4,
+    day: 0,
+    time: "3:00 PM",
+    end: "3:45 PM",
+    title: "Policy Answers in Seconds",
+    speakers: ["Kunal Kumar", "Prachiti Bake", "Shivang Bhargava"],
+    track: "Showcase",
+    description: "Discover a faster way to find policy answers, reduce manual searching and help colleagues reach consistent, actionable guidance."
+  },
+  {
+    id: 5,
+    day: 0,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "Tech Talk by ThoughtSpot",
+    speakers: ["Sonny Rivera", "Shailesh Prajapati"],
+    track: "Tech Talk",
+    partner: "ThoughtSpot",
+    tech: true,
+    description: "An industry technology talk from ThoughtSpot exploring search & AI-driven analytics, live insights, and practical enterprise data intelligence."
+  },
 
-  { id: 6, day: 1, time: "11:00 AM", end: "12:00 PM", title: "Contact Center Signals to Trusted Decisions", speakers: ["Charan Mydavolu"], tech: true, partner: "Tech Talk by AWS", description: "Learn how contact-center signals can be translated into trusted decisions, with an AWS technology talk perspective." },
-  { id: 7, day: 1, time: "12:00 PM", end: "1:00 PM", title: "Architecture as Code: Design, Govern, Scale", speakers: ["Raveesh Sharma", "Pradeep Narayanaswamy", "Gourav Sharma"], description: "Explore architecture as code to make design practices repeatable, governance more consistent and enterprise architecture easier to scale." },
-  { id: 8, day: 1, time: "2:00 PM", end: "3:00 PM", title: "The AI Front Door for IT Support", speakers: ["Rakesh Padhiary", "Niraj Thakar"], description: "See how an AI-powered front door can simplify IT support, guide users to answers and improve the support experience." },
-  { id: 9, day: 1, time: "3:00 PM", end: "4:00 PM", title: "Financial Statements to Decisions—Faster", speakers: ["Chandan Chandrupatla", "Pavan Puttaswamy", "S Sridhar"], description: "Explore ways to accelerate the journey from financial statements to useful insights and faster, more informed decisions." },
-  { id: 10, day: 1, time: "7:00 PM", end: "8:00 PM", title: "3,000 Apps. One Observability View", speakers: ["Praveen Kumar Jagadeesan", "Pritesh Parmar"], description: "Discover how a unified observability view can help teams understand health and signals across a large application estate." },
+  // TUESDAY, OCT 27 (Day 1)
+  {
+    id: 6,
+    day: 1,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "Contact Center Signals to Trusted Decisions",
+    speakers: ["Charan Mydavolu"],
+    track: "Showcase",
+    description: "Learn how contact-center signals can be translated into trusted decisions with automated speech analytics, sentiment workflows, and real-time guidance."
+  },
+  {
+    id: 7,
+    day: 1,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "Tech Talk by AWS",
+    speakers: ["Abhisheikh Lahoti", "Vicky Shuler"],
+    track: "Tech Talk",
+    partner: "AWS",
+    tech: true,
+    description: "An industry technology talk from AWS exploring generative AI contact center capabilities, intelligent routing, and cloud-native architecture."
+  },
+  {
+    id: 8,
+    day: 1,
+    time: "12:00 PM",
+    end: "12:45 PM",
+    title: "Architecture as Code: Design, Govern, Scale",
+    speakers: ["Raveesh Sharma", "Pradeep Narayanaswamy", "Gourav Sharma"],
+    track: "Showcase",
+    description: "Explore architecture as code to make design practices repeatable, governance more consistent and enterprise architecture easier to scale."
+  },
+  {
+    id: 9,
+    day: 1,
+    time: "2:00 PM",
+    end: "2:45 PM",
+    title: "The AI Front Door for IT Support",
+    speakers: ["Rakesh Padhiary", "Niraj Thakar"],
+    track: "Showcase",
+    description: "See how an AI-powered front door can simplify IT support, guide users to answers and improve the support experience."
+  },
+  {
+    id: 10,
+    day: 1,
+    time: "3:00 PM",
+    end: "3:45 PM",
+    title: "Financial Statements to Decisions—Faster",
+    speakers: ["Chandan Chandrupatla", "Pavan Puttaswamy", "S Sridhar"],
+    track: "Showcase",
+    description: "Explore ways to accelerate the journey from financial statements to useful insights and faster, more informed decisions."
+  },
+  {
+    id: 11,
+    day: 1,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "3,000 Apps, One Observability View",
+    speakers: ["Praveen Kumar Jagadeesan", "Pritesh Parmar"],
+    track: "Showcase",
+    description: "Discover how a unified observability view can help teams understand health and signals across a large application estate."
+  },
 
-  { id: 11, day: 2, time: "11:00 AM", end: "12:00 PM", title: "One AI Teammate, 41,800 Users", speakers: ["Kazhian Muthusami", "Monika Oberoi"], description: "Explore an AI teammate experience designed to support a large employee community and make everyday work more productive." },
-  { id: 12, day: 2, time: "12:00 PM", end: "1:00 PM", title: "Ask Your Stack. Find Root Cause Faster", speakers: ["Kiran kumar Tula"], description: "Learn how conversational exploration across your technology stack can help engineers find root causes faster." },
-  { id: 13, day: 2, time: "2:00 PM", end: "3:00 PM", title: "Customer 360—Ready When You Ask", speakers: ["Sai Anusha Kurapati", "S P Muthukrishnan", "Ramya Balasubramanian"], description: "See how customer information can be brought together to deliver a more complete view when teams need it." },
-  { id: 14, day: 2, time: "3:00 PM", end: "4:00 PM", title: "From Incident to Insight—By Conversation", speakers: ["Shibankar Ghosh"], description: "Explore a conversational approach to incident analysis that helps teams move from operational events to actionable insight." },
-  { id: 15, day: 2, time: "7:00 PM", end: "8:00 PM", title: "AI Governance for Prompts and Unstructured Data", speakers: ["Roddi Krishna", "Vivek Sharma"], tech: true, partner: "Tech Talk by Cognition · Jack Meigel; Daniel Levin", description: "Explore governance approaches for prompts and unstructured data, alongside a Cognition technology talk featuring Jack Meigel and Daniel Levin." },
+  // WEDNESDAY, OCT 28 (Day 2)
+  {
+    id: 12,
+    day: 2,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "One AI Teammate, 41,800 Users",
+    speakers: ["Kazhian Muthusami", "Monika Oberoi"],
+    track: "Showcase",
+    description: "Explore an AI teammate experience designed to support a large employee community and make everyday work more productive."
+  },
+  {
+    id: 13,
+    day: 2,
+    time: "12:00 PM",
+    end: "12:45 PM",
+    title: "Ask Your Stack, Find Root Cause Faster",
+    speakers: ["Kiran kumar Tula"],
+    track: "Showcase",
+    description: "Learn how conversational exploration across your technology stack can help engineers find root causes faster."
+  },
+  {
+    id: 14,
+    day: 2,
+    time: "2:00 PM",
+    end: "2:45 PM",
+    title: "Customer 360—Ready When You Ask",
+    speakers: ["Sai Anusha Kurapati", "S P Muthukrishnan", "Ramya Balasubramanian"],
+    track: "Showcase",
+    description: "See how customer information can be brought together to deliver a more complete view when teams need it."
+  },
+  {
+    id: 15,
+    day: 2,
+    time: "3:00 PM",
+    end: "3:45 PM",
+    title: "From Incident to Insight—By Conversation",
+    speakers: ["Shibankar Ghosh"],
+    track: "Showcase",
+    description: "Explore a conversational approach to incident analysis that helps teams move from operational events to actionable insight."
+  },
+  {
+    id: 16,
+    day: 2,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "AI Governance for Prompts and Unstructured Data",
+    speakers: ["Reddi Krishna", "Vivek Sharma"],
+    track: "Showcase",
+    description: "Explore governance approaches for prompts and unstructured data, compliance frameworks, and enterprise safety controls."
+  },
+  {
+    id: 17,
+    day: 2,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "Tech Talk by Cognition",
+    speakers: ["Jack Meigel", "Daniel Levin"],
+    track: "Tech Talk",
+    partner: "Cognition",
+    tech: true,
+    description: "An industry technology talk from Cognition exploring agentic coding systems, generative software engineering, and AI developer platforms."
+  },
 
-  { id: 16, day: 3, time: "10:30 AM", end: "11:00 AM", title: "Tech Talk by IBM", speakers: ["Manish Bhide"], tech: true, description: "An industry technology talk from IBM with Manish Bhide." },
-  { id: 17, day: 3, time: "11:00 AM", end: "12:00 PM", title: "Modernize Mainframe, Keep Business Moving", speakers: ["Vinay Nair", "Ramachandra Srinivas"], description: "Explore modernization approaches that help evolve mainframe capabilities while maintaining business continuity." },
-  { id: 18, day: 3, time: "12:00 PM", end: "1:00 PM", title: "Tokenized Deposits: Build Faster, Test Smarter", speakers: ["Vimal Mishra", "Rajendran Paranthaman"], description: "Discover ways to build and test tokenized deposit capabilities faster, with a focus on smarter engineering." },
-  { id: 19, day: 3, time: "2:00 PM", end: "3:00 PM", title: "Give Every AI Agent an Identity", speakers: ["Bhargavi Bandi", "Harishankar H"], description: "Learn why agent identity matters and how identity-aware controls can support safer, more accountable AI agent operations." },
-  { id: 20, day: 3, time: "3:00 PM", end: "4:00 PM", title: "Policy Change to Action—in Minutes", speakers: ["Raghav Nyapati", "Trilok Maddipudi"], description: "Explore how policy changes can be translated into clear, timely action with less manual effort." },
-  { id: 21, day: 3, time: "7:00 PM", end: "8:00 PM", title: "From Trusted Answers to Tested Experiences", speakers: ["Nikitha M", "Lochan George", "Ashish Reddy"], tech: true, partner: "Tech Talk by Arize · Aparna Dhinakaran", description: "Explore the journey from trusted answers to tested experiences, including Vantage Assistant, Relay and VISTA, with an Arize technology talk." },
+  // THURSDAY, OCT 29 (Day 3)
+  {
+    id: 18,
+    day: 3,
+    time: "10:30 AM",
+    end: "11:30 AM",
+    title: "Tech Talk by IBM",
+    speakers: ["Manish Bhide"],
+    track: "Tech Talk",
+    partner: "IBM",
+    tech: true,
+    description: "An industry technology talk from IBM exploring enterprise AI, governance, data fabric, and hybrid cloud solutions."
+  },
+  {
+    id: 19,
+    day: 3,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "Modernize Mainframe, Keep Business Moving",
+    speakers: ["Vinay Nair", "Ramachandra Srinivas"],
+    track: "Showcase",
+    description: "Explore modernization approaches that help evolve mainframe capabilities while maintaining business continuity."
+  },
+  {
+    id: 20,
+    day: 3,
+    time: "12:00 PM",
+    end: "12:45 PM",
+    title: "Tokenized Deposits: Build Faster, Test Smarter",
+    speakers: ["Vimal Mishra", "Rajendran Paranthaman"],
+    track: "Showcase",
+    description: "Discover ways to build and test tokenized deposit capabilities faster, with a focus on smarter engineering."
+  },
+  {
+    id: 21,
+    day: 3,
+    time: "2:00 PM",
+    end: "2:45 PM",
+    title: "Give Every AI Agent an Identity",
+    speakers: ["Bhargavi Bandi", "Harishankar H"],
+    track: "Showcase",
+    description: "Learn why agent identity matters and how identity-aware controls can support safer, more accountable AI agent operations."
+  },
+  {
+    id: 22,
+    day: 3,
+    time: "3:00 PM",
+    end: "3:45 PM",
+    title: "Policy Change to Action—In Minutes",
+    speakers: ["Raghav Nyapati", "Trilok Maddipudi"],
+    track: "Showcase",
+    description: "Explore how policy changes can be translated into clear, timely action with less manual effort."
+  },
+  {
+    id: 23,
+    day: 3,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "From Trusted Answers to Tested Experiences: Vantage Assistant, Relay & VISTA",
+    speakers: ["Nikitha M", "Lochan George", "Ashish Reddy"],
+    track: "Showcase",
+    description: "Explore the journey from trusted answers to tested experiences, including Vantage Assistant, Relay and VISTA."
+  },
+  {
+    id: 24,
+    day: 3,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "Tech Talk by Arize",
+    speakers: ["Aparna Dhinakaran"],
+    track: "Tech Talk",
+    partner: "Arize",
+    tech: true,
+    description: "An industry technology talk from Arize exploring LLM observability, evaluation workflows, and tracing AI applications in production."
+  },
 
-  { id: 22, day: 4, time: "11:00 AM", end: "12:00 PM", title: "The Right Access, Recommended in Real Time", speakers: ["Parth Choubey", "Sailesh Swaminathan"], tech: true, partner: "Tech Talk by H2O.ai · Ashrith Barthur", description: "Explore real-time access recommendations and a technology talk from H2O.ai featuring Ashrith Barthur." },
-  { id: 23, day: 4, time: "12:00 PM", end: "1:00 PM", title: "Q-Forge – Build Test Suite with Agentic Automation", speakers: ["Pravin Kumar Pachamuthu", "Sini Sivasankaran"], description: "See how agentic automation can help teams build test suites and strengthen software quality workflows." },
-  { id: 24, day: 4, time: "2:00 PM", end: "3:00 PM", title: "Records Management Modernization with Data Platform", speakers: ["Krishna Gokavarapu"], description: "Explore how a modern data platform can support records management modernization and more effective information workflows." },
-  { id: 25, day: 4, time: "3:00 PM", end: "4:00 PM", title: "Policy as Testable, Traceable Action", speakers: ["Roshin Puthanveetil"], description: "Learn how policies can become testable, traceable actions that help teams demonstrate consistent execution." },
-  { id: 26, day: 4, time: "7:00 PM", end: "8:00 PM", title: "Ask iBot: ECM Ops in Under a Minute", speakers: ["Surya Mangipudi", "Vivekananda Kondaveeti"], tech: true, partner: "Tech Talk by Google · Vasu Mittal", description: "See how iBot can help streamline ECM operations in under a minute, with a Google technology talk featuring Vasu Mittal." }
+  // FRIDAY, OCT 30 (Day 4)
+  {
+    id: 25,
+    day: 4,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "The Right Access, Recommended in Real Time",
+    speakers: ["Parth Choubey", "Sailesh Swaminathan"],
+    track: "Showcase",
+    description: "Explore real-time access recommendations, intelligent privilege controls, and automated authorization workflows."
+  },
+  {
+    id: 26,
+    day: 4,
+    time: "11:00 AM",
+    end: "11:45 AM",
+    title: "Tech Talk by H2O.ai",
+    speakers: ["Ashrith Barthur"],
+    track: "Tech Talk",
+    partner: "H2O.ai",
+    tech: true,
+    description: "An industry technology talk from H2O.ai exploring domain-specific AI, predictive models, and enterprise machine learning platforms."
+  },
+  {
+    id: 27,
+    day: 4,
+    time: "12:00 PM",
+    end: "12:45 PM",
+    title: "Q-Forge - Build Test suite with Agentic Automation",
+    speakers: ["Pravin Kumar Pachamuthu", "Sini Sivasankaran"],
+    track: "Showcase",
+    description: "See how agentic automation can help teams build test suites and strengthen software quality workflows."
+  },
+  {
+    id: 28,
+    day: 4,
+    time: "2:00 PM",
+    end: "2:45 PM",
+    title: "Records Management Modernization with Data Platform",
+    speakers: ["Krishna Gokavarapu"],
+    track: "Showcase",
+    description: "Explore how a modern data platform can support records management modernization and more effective information workflows."
+  },
+  {
+    id: 29,
+    day: 4,
+    time: "3:00 PM",
+    end: "3:45 PM",
+    title: "Policy as Testable, Traceable Action",
+    speakers: ["Roshin Puthanveetil"],
+    track: "Showcase",
+    description: "Learn how policies can become testable, traceable actions that help teams demonstrate consistent execution."
+  },
+  {
+    id: 30,
+    day: 4,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "Ask iBot: ECM Ops in Under a Minute",
+    speakers: ["Surya Mangipudi", "Vivekananda Kondaveeti"],
+    track: "Showcase",
+    description: "See how iBot can help streamline ECM operations in under a minute with intelligent automation."
+  },
+  {
+    id: 31,
+    day: 4,
+    time: "7:00 PM",
+    end: "7:45 PM",
+    title: "Tech Talk by Google",
+    speakers: ["Vasu Mittal"],
+    track: "Tech Talk",
+    partner: "Google",
+    tech: true,
+    description: "An industry technology talk from Google exploring scalable cloud architectures, multimodal AI, and developer ecosystem innovations."
+  }
 ];
 
 let activeDay = 0;
@@ -1209,11 +1757,39 @@ function getFilteredSessions() {
     }
     if (query) {
       const q = query.toLowerCase();
-      const match = (s.title + " " + s.speakers.join(" ") + " " + (s.partner || "") + " " + s.description).toLowerCase();
+      const match = (s.title + " " + s.speakers.join(" ") + " " + (s.partner || "") + " " + (s.track || "") + " " + s.description).toLowerCase();
       if (!match.includes(q)) return false;
     }
     return true;
   });
+}
+
+// Group filtered sessions into slots
+function groupSessionsBySlot(list) {
+  if (filter === "saved") {
+    return list.map(s => ({
+      day: s.day,
+      time: s.time,
+      end: s.end,
+      sessions: [s]
+    }));
+  }
+
+  const slots = [];
+  list.forEach(s => {
+    const last = slots[slots.length - 1];
+    if (last && last.time === s.time && last.day === s.day) {
+      last.sessions.push(s);
+    } else {
+      slots.push({
+        day: s.day,
+        time: s.time,
+        end: s.end,
+        sessions: [s]
+      });
+    }
+  });
+  return slots;
 }
 
 // Render Day Strip (No page jumping or scrolling)
@@ -1238,12 +1814,11 @@ function renderDays() {
       renderDays();
       renderSessions();
       renderDetail();
-      // Only updates the below panel - no scrolling!
     });
   });
 }
 
-// Render Sessions Timeline for the Selected Day Only
+// Render Sessions Timeline with Parallel Track grouping
 function renderSessions() {
   const container = $("sessionsContainer");
   const filtered = getFilteredSessions();
@@ -1270,30 +1845,109 @@ function renderSessions() {
       <div class="dayheading">
         <div>
           <h2>${escapeHTML(d.full)}</h2>
-          <p>${filtered.length} Sessions <span class="bullet">•</span> ${activeDay === 3 ? "10:30 AM" : "11:00 AM"} – 8:00 PM</p>
+          <p>${filtered.length} Sessions <span class="bullet">•</span> ${activeDay === 3 ? "10:30 AM" : "11:00 AM"} – 7:45 PM</p>
         </div>
         <span class="count-badge">DAY 0${activeDay + 1}</span>
       </div>
     `;
   }
 
+  const slots = groupSessionsBySlot(filtered);
+
   container.innerHTML = `
     <section class="day-group">
       ${headerHtml}
       <div class="session-list">
-        ${filtered.map(s => `
-          <button class="session-card ${s.id === selectedId ? "selected" : ""}" data-id="${s.id}">
-            <span class="session-time">${escapeHTML(s.time)}</span>
-            <span class="session-info">
-              <span class="session-title">${escapeHTML(s.title)}</span>
-              <span class="session-speakers">${escapeHTML(s.speakers.join("; "))}</span>
-              ${s.partner ? `<span class="session-extra">${escapeHTML(s.partner)}</span>` : ""}
-            </span>
-            <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
-        `).join("")}
+        ${slots.map(slot => {
+          if (slot.sessions.length > 1) {
+            return `
+              <div class="concurrent-slot">
+                <div class="concurrent-header">
+                  <div class="concurrent-time-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>${escapeHTML(slot.time)} – ${escapeHTML(slot.end)}</span>
+                  </div>
+                  <div class="concurrent-pill">
+                    <span class="pulse-dot"></span>
+                    <span>2 Concurrent Tracks · Choose a Session</span>
+                  </div>
+                </div>
+                <div class="concurrent-grid">
+                  ${slot.sessions.map(s => `
+                    <button class="session-card concurrent-card ${s.id === selectedId ? "selected" : ""}" data-id="${s.id}" aria-label="${escapeHTML(s.title)}">
+                      <div class="card-meta-top">
+                        <span class="track-tag ${s.partner ? "tag-partner" : "tag-showcase"}">
+                          ${s.partner ? `Tech Talk · ${escapeHTML(s.partner)}` : "Showcase Track"}
+                        </span>
+                        ${saved.has(s.id) ? `<span class="saved-badge-chip">★ Saved</span>` : ""}
+                      </div>
+                      <div class="session-title">${escapeHTML(s.title)}</div>
+                      <div class="session-speakers">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>${escapeHTML(s.speakers.join("; "))}</span>
+                      </div>
+                      <div class="card-meta-bottom">
+                        <span class="location-chip">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                          </svg>
+                          Virtual
+                        </span>
+                        <span class="card-action-hint">
+                          <span>Details</span>
+                          <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                          </svg>
+                        </span>
+                      </div>
+                    </button>
+                  `).join("")}
+                </div>
+              </div>
+            `;
+          } else {
+            const s = slot.sessions[0];
+            const duration = (s.time === "10:30 AM" && s.end === "11:30 AM") ? "60m" : "45m";
+            return `
+              <button class="session-card single-card ${s.id === selectedId ? "selected" : ""}" data-id="${s.id}" aria-label="${escapeHTML(s.title)}">
+                <div class="card-time-col">
+                  <span class="session-time">${escapeHTML(s.time)}</span>
+                  <span class="session-duration">${duration}</span>
+                  ${filter === "saved" ? `<span style="font-size:10px;color:var(--red);font-weight:700;">${days[s.day].dow} ${days[s.day].date}</span>` : ""}
+                </div>
+                <div class="session-info">
+                  <div class="card-meta-top">
+                    <span class="track-tag ${s.partner ? "tag-partner" : "tag-showcase"}">
+                      ${s.partner ? `Tech Talk · ${escapeHTML(s.partner)}` : "Showcase Track"}
+                    </span>
+                    ${saved.has(s.id) ? `<span class="saved-badge-chip">★ Saved</span>` : ""}
+                  </div>
+                  <div class="session-title">${escapeHTML(s.title)}</div>
+                  <div class="session-speakers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>${escapeHTML(s.speakers.join("; "))}</span>
+                  </div>
+                </div>
+                <div class="card-end-col">
+                  <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </div>
+              </button>
+            `;
+          }
+        }).join("")}
       </div>
     </section>
   `;
@@ -1360,7 +2014,7 @@ function renderDetail() {
         `).join("")}
       </div>
 
-      <span class="category-pill">${s.tech ? "Industry Tech Talk" : "Innovation Showcase"}</span>
+      <span class="category-pill">${s.partner ? `Industry Tech Talk · ${escapeHTML(s.partner)}` : "Innovation Showcase"}</span>
 
       ${s.partner ? `
         <div class="detail-row">
@@ -1647,7 +2301,7 @@ function openSessionModal(id) {
         `).join("")}
       </div>
 
-      <span class="category-pill">${s.tech ? "Industry Tech Talk" : "Innovation Showcase"}</span>
+      <span class="category-pill">${s.partner ? `Industry Tech Talk · ${escapeHTML(s.partner)}` : "Innovation Showcase"}</span>
 
       ${s.partner ? `
         <div class="detail-row">
